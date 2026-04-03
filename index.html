@@ -255,6 +255,117 @@
     .p7 { grid-column: span 5; grid-row: span 3; }
     .p8 { grid-column: span 3; grid-row: span 2; }
 
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 4, 14, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 50;
+    }
+
+    .modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .letter {
+      position: relative;
+      width: min(920px, 100%);
+      max-height: 92vh;
+      overflow: auto;
+      background: linear-gradient(180deg, #fff8fc, #fff2f7);
+      color: #44253b;
+      border-radius: 28px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.42);
+      padding: 22px;
+      transform: scale(0.86) translateY(30px);
+      opacity: 0;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      border: 2px solid rgba(255, 158, 201, 0.35);
+    }
+
+    .modal.show .letter {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .close-btn {
+      position: sticky;
+      top: 0;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 50%;
+      background: #ff69b4;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(255, 105, 180, 0.35);
+      z-index: 2;
+    }
+
+    .letter-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .letter-photo {
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.18);
+      background: #fff;
+    }
+
+    .letter-photo img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 1 / 1.15;
+      object-fit: cover;
+    }
+
+    .letter-content {
+      padding: 6px 6px 10px;
+    }
+
+    .letter-badge {
+      display: inline-block;
+      background: #ffd4e7;
+      color: #a43c6f;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      font-size: 0.92rem;
+    }
+
+    .letter-title {
+      margin: 0 0 12px;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: #7d2d56;
+    }
+
+    .letter-text {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.9;
+      color: #5b3250;
+      white-space: pre-line;
+    }
+
     .footer {
       text-align: center;
       margin-top: 36px;
@@ -323,6 +434,10 @@
         width: auto;
         text-align: center;
       }
+
+      .letter-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -347,7 +462,7 @@
     </section>
 
     <section class="player-note">
-      Toca una foto para abrir su recuerdo con un corazón animado y su música 💖🎵
+      Toca una foto para abrir su recuerdo como carta con texto y música 💖🎵
     </section>
 
     <div class="volume-box">
@@ -356,27 +471,27 @@
       <div class="volume-value" id="volumeValue">100%</div>
     </div>
 
-    <div id="status">Toca una foto para comenzar 🎶</div>
+    <div id="status">Toca una foto para abrir la carta 🎶</div>
 
     <section class="collage">
-      <div class="photo p1" style="--rot:-2deg" data-text="Recuerdo 1 💫" data-audio="1.mp3"><img src="1.png" alt="Foto 1"></div>
-      <div class="photo p2" style="--rot:2deg" data-text="Recuerdo 2 ✨" data-audio="2.mp3"><img src="2.png" alt="Foto 2"></div>
-      <div class="photo p3" style="--rot:-1deg" data-text="Recuerdo 3 💙" data-audio="3.mp3"><img src="3.png" alt="Foto 3"></div>
-      <div class="photo p4" style="--rot:1deg" data-text="Recuerdo 4 🫶" data-audio="4.mp3"><img src="4.png" alt="Foto 4"></div>
-      <div class="photo p5" style="--rot:-3deg" data-text="Recuerdo 5 🌙" data-audio="5.mp3"><img src="5.png" alt="Foto 5"></div>
-      <div class="photo p6" style="--rot:2deg" data-text="Recuerdo 6 ❤️" data-audio="6.mp3"><img src="6.png" alt="Foto 6"></div>
-      <div class="photo p7" style="--rot:1deg" data-text="Recuerdo 7 💖" data-audio="7.mp3"><img src="7.png" alt="Foto 7"></div>
-      <div class="photo p8" style="--rot:-2deg" data-text="Recuerdo 8 💌" data-audio="8.mp3"><img src="8.png" alt="Foto 8"></div>
-      <div class="photo p2" style="--rot:2deg" data-text="Recuerdo 9 🌟" data-audio="9.mp3"><img src="9.png" alt="Foto 9"></div>
-      <div class="photo p4" style="--rot:-1deg" data-text="Recuerdo 10 💞" data-audio="10.mp3"><img src="10.png" alt="Foto 10"></div>
-      <div class="photo p6" style="--rot:1deg" data-text="Recuerdo 11 🎀" data-audio="11.mp3"><img src="11.png" alt="Foto 11"></div>
-      <div class="photo p3" style="--rot:-2deg" data-text="Recuerdo 12 💘" data-audio="12.mp3"><img src="12.png" alt="Foto 12"></div>
-      <div class="photo p5" style="--rot:2deg" data-text="Recuerdo 13 ✨" data-audio="13.mp3"><img src="13.png" alt="Foto 13"></div>
-      <div class="photo p2" style="--rot:-1deg" data-text="Recuerdo 14 💝" data-audio="14.mp3"><img src="14.png" alt="Foto 14"></div>
-      <div class="photo p4" style="--rot:1deg" data-text="Recuerdo 15 🌹" data-audio="15.mp3"><img src="15.png" alt="Foto 15"></div>
-      <div class="photo p6" style="--rot:-2deg" data-text="Recuerdo 16 💫" data-audio="16.mp3"><img src="16.png" alt="Foto 16"></div>
-      <div class="photo p3" style="--rot:2deg" data-text="Recuerdo 17 💗" data-audio="17.mp3"><img src="17.png" alt="Foto 17"></div>
-      <div class="photo p5" style="--rot:-1deg" data-text="Recuerdo 18 🥹" data-audio="18.mp3"><img src="18.png" alt="Foto 18"></div>
+      <div class="photo p1" style="--rot:-2deg" data-index="1" data-text="Recuerdo 1 💫" data-audio="1.mp3" data-title="Nuestro Recuerdo 1 💫" data-message="Aquí puedes escribir el mensaje de la foto 1.\n\nPor ejemplo: este día me hizo muy feliz y me encanta recordarlo contigo.\n\nGracias por estar en mi vida."><img src="1.png" alt="Foto 1"></div>
+      <div class="photo p2" style="--rot:2deg" data-index="2" data-text="Recuerdo 2 ✨" data-audio="2.mp3" data-title="Nuestro Recuerdo 2 ✨" data-message="Aquí va el texto romántico de la foto 2.\n\nPuedes cambiar cada carta por algo especial para esa imagen."><img src="2.png" alt="Foto 2"></div>
+      <div class="photo p3" style="--rot:-1deg" data-index="3" data-text="Recuerdo 3 💙" data-audio="3.mp3" data-title="Nuestro Recuerdo 3 💙" data-message="Mensaje para la foto 3.\n\nRecuerdo bonito, palabras lindas, lo que tú quieras dedicar."><img src="3.png" alt="Foto 3"></div>
+      <div class="photo p4" style="--rot:1deg" data-index="4" data-text="Recuerdo 4 🫶" data-audio="4.mp3" data-title="Nuestro Recuerdo 4 🫶" data-message="Mensaje para la foto 4."><img src="4.png" alt="Foto 4"></div>
+      <div class="photo p5" style="--rot:-3deg" data-index="5" data-text="Recuerdo 5 🌙" data-audio="5.mp3" data-title="Nuestro Recuerdo 5 🌙" data-message="Mensaje para la foto 5."><img src="5.png" alt="Foto 5"></div>
+      <div class="photo p6" style="--rot:2deg" data-index="6" data-text="Recuerdo 6 ❤️" data-audio="6.mp3" data-title="Nuestro Recuerdo 6 ❤️" data-message="Mensaje para la foto 6."><img src="6.png" alt="Foto 6"></div>
+      <div class="photo p7" style="--rot:1deg" data-index="7" data-text="Recuerdo 7 💖" data-audio="7.mp3" data-title="Nuestro Recuerdo 7 💖" data-message="Mensaje para la foto 7."><img src="7.png" alt="Foto 7"></div>
+      <div class="photo p8" style="--rot:-2deg" data-index="8" data-text="Recuerdo 8 💌" data-audio="8.mp3" data-title="Nuestro Recuerdo 8 💌" data-message="Mensaje para la foto 8."><img src="8.png" alt="Foto 8"></div>
+      <div class="photo p2" style="--rot:2deg" data-index="9" data-text="Recuerdo 9 🌟" data-audio="9.mp3" data-title="Nuestro Recuerdo 9 🌟" data-message="Mensaje para la foto 9."><img src="9.png" alt="Foto 9"></div>
+      <div class="photo p4" style="--rot:-1deg" data-index="10" data-text="Recuerdo 10 💞" data-audio="10.mp3" data-title="Nuestro Recuerdo 10 💞" data-message="Mensaje para la foto 10."><img src="10.png" alt="Foto 10"></div>
+      <div class="photo p6" style="--rot:1deg" data-index="11" data-text="Recuerdo 11 🎀" data-audio="11.mp3" data-title="Nuestro Recuerdo 11 🎀" data-message="Mensaje para la foto 11."><img src="11.png" alt="Foto 11"></div>
+      <div class="photo p3" style="--rot:-2deg" data-index="12" data-text="Recuerdo 12 💘" data-audio="12.mp3" data-title="Nuestro Recuerdo 12 💘" data-message="Mensaje para la foto 12."><img src="12.png" alt="Foto 12"></div>
+      <div class="photo p5" style="--rot:2deg" data-index="13" data-text="Recuerdo 13 ✨" data-audio="13.mp3" data-title="Nuestro Recuerdo 13 ✨" data-message="Mensaje para la foto 13."><img src="13.png" alt="Foto 13"></div>
+      <div class="photo p2" style="--rot:-1deg" data-index="14" data-text="Recuerdo 14 💝" data-audio="14.mp3" data-title="Nuestro Recuerdo 14 💝" data-message="Mensaje para la foto 14."><img src="14.png" alt="Foto 14"></div>
+      <div class="photo p4" style="--rot:1deg" data-index="15" data-text="Recuerdo 15 🌹" data-audio="15.mp3" data-title="Nuestro Recuerdo 15 🌹" data-message="Mensaje para la foto 15."><img src="15.png" alt="Foto 15"></div>
+      <div class="photo p6" style="--rot:-2deg" data-index="16" data-text="Recuerdo 16 💫" data-audio="16.mp3" data-title="Nuestro Recuerdo 16 💫" data-message="Mensaje para la foto 16."><img src="16.png" alt="Foto 16"></div>
+      <div class="photo p3" style="--rot:2deg" data-index="17" data-text="Recuerdo 17 💗" data-audio="17.mp3" data-title="Nuestro Recuerdo 17 💗" data-message="Mensaje para la foto 17."><img src="17.png" alt="Foto 17"></div>
+      <div class="photo p5" style="--rot:-1deg" data-index="18" data-text="Recuerdo 18 🥹" data-audio="18.mp3" data-title="Nuestro Recuerdo 18 🥹" data-message="Mensaje para la foto 18."><img src="18.png" alt="Foto 18"></div>
     </section>
 
     <section class="footer">
@@ -385,12 +500,34 @@
     </section>
   </main>
 
+  <div class="modal" id="letterModal">
+    <div class="letter">
+      <button class="close-btn" id="closeModal">✕</button>
+      <div class="letter-grid">
+        <div class="letter-photo">
+          <img id="modalImage" src="1.png" alt="Recuerdo">
+        </div>
+        <div class="letter-content">
+          <div class="letter-badge" id="modalBadge">Carta especial 💌</div>
+          <h2 class="letter-title" id="modalTitle">Título</h2>
+          <p class="letter-text" id="modalText">Texto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const floatingBg = document.getElementById('floatingBg');
     const symbols = ['💙', '💖', '✨', '🤍', '🌙', '⭐'];
     const volumeControl = document.getElementById('volumeControl');
     const volumeValue = document.getElementById('volumeValue');
     const statusEl = document.getElementById('status');
+    const letterModal = document.getElementById('letterModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalBadge = document.getElementById('modalBadge');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalText = document.getElementById('modalText');
 
     let currentAudio = null;
     let globalVolume = 1;
@@ -420,6 +557,34 @@
 
     updateVolumeText(globalVolume);
 
+    function openLetter(photo) {
+      const index = photo.dataset.index;
+      const title = photo.dataset.title || 'Carta especial';
+      const message = photo.dataset.message || 'Aquí va tu texto.';
+      const image = photo.querySelector('img').getAttribute('src');
+
+      modalImage.src = image;
+      modalTitle.textContent = title;
+      modalBadge.textContent = 'Recuerdo ' + index + ' 💌';
+      modalText.textContent = message;
+      letterModal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLetter() {
+      letterModal.classList.remove('show');
+      document.body.style.overflow = 'auto';
+    }
+
+    closeModal.addEventListener('click', closeLetter);
+    letterModal.addEventListener('click', (e) => {
+      if (e.target === letterModal) closeLetter();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLetter();
+    });
+
     document.querySelectorAll('.photo').forEach((photo) => {
       photo.addEventListener('click', async () => {
         const src = photo.dataset.audio;
@@ -447,7 +612,8 @@
 
         setTimeout(() => {
           photo.classList.remove('opening');
-        }, 1100);
+          openLetter(photo);
+        }, 650);
       });
     });
   </script>
