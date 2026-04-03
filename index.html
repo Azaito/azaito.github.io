@@ -127,7 +127,6 @@
       min-width: 92px;
       font-weight: bold;
       color: #ffffff;
-      text-shadow: 0 0 10px rgba(255,255,255,0.18);
     }
 
     .volume-box input[type="range"] {
@@ -228,7 +227,7 @@
     }
 
     .photo.opening::before {
-      animation: heartOpen 1s ease forwards;
+      animation: heartOpen 0.7s ease forwards;
     }
 
     .photo::after {
@@ -258,111 +257,154 @@
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(6, 4, 14, 0.8);
-      backdrop-filter: blur(10px);
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-      z-index: 50;
+      padding: 18px;
+      background: rgba(7, 4, 16, 0.82);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
     }
 
     .modal.show {
-      opacity: 1;
-      pointer-events: auto;
+      display: flex;
     }
 
-    .letter {
+    .envelope-scene {
+      width: min(980px, 100%);
       position: relative;
-      width: min(920px, 100%);
-      max-height: 92vh;
-      overflow: auto;
-      background: linear-gradient(180deg, #fff8fc, #fff2f7);
-      color: #44253b;
-      border-radius: 28px;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.42);
-      padding: 22px;
-      transform: scale(0.86) translateY(30px);
-      opacity: 0;
-      transition: transform 0.35s ease, opacity 0.35s ease;
-      border: 2px solid rgba(255, 158, 201, 0.35);
-    }
-
-    .modal.show .letter {
-      transform: scale(1) translateY(0);
-      opacity: 1;
+      animation: modalFade 0.25s ease;
     }
 
     .close-btn {
-      position: sticky;
-      top: 0;
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 44px;
+      height: 44px;
       border: none;
       border-radius: 50%;
       background: #ff69b4;
       color: white;
-      font-size: 20px;
+      font-size: 22px;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(255, 105, 180, 0.35);
-      z-index: 2;
+      box-shadow: 0 8px 18px rgba(255,105,180,0.35);
+      z-index: 20;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+
+    .envelope-back {
+      position: absolute;
+      width: min(760px, 100%);
+      height: 470px;
+      background: linear-gradient(180deg, #ffbfdc, #f39ac4);
+      border-radius: 24px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+
+    .envelope-front {
+      position: absolute;
+      bottom: 0;
+      width: min(760px, 100%);
+      height: 270px;
+      background: linear-gradient(180deg, #ffacd1, #ee79b4);
+      clip-path: polygon(0 0, 50% 75%, 100% 0, 100% 100%, 0 100%);
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      z-index: 8;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      width: min(760px, 100%);
+      height: 250px;
+      background: linear-gradient(180deg, #ffc9e3, #ff9dca);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      z-index: 10;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    }
+
+    .modal.show .envelope-flap {
+      animation: openFlap 0.9s ease forwards;
+    }
+
+    .letter-card {
+      position: relative;
+      width: min(680px, calc(100% - 60px));
+      max-height: 76vh;
+      overflow: auto;
+      background: linear-gradient(180deg, #fff9fc, #fff0f7);
+      color: #4c2740;
+      border-radius: 28px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+      padding: 22px;
+      border: 2px solid rgba(255, 167, 206, 0.45);
+      z-index: 6;
+      transform: translateY(110px);
+      opacity: 0;
+    }
+
+    .modal.show .letter-card {
+      animation: pullLetter 0.95s ease 0.35s forwards;
     }
 
     .letter-grid {
       display: grid;
-      grid-template-columns: 340px 1fr;
+      grid-template-columns: 290px 1fr;
       gap: 22px;
       align-items: start;
     }
 
     .letter-photo {
       width: 100%;
-      border-radius: 22px;
       overflow: hidden;
+      border-radius: 22px;
+      background: white;
       box-shadow: 0 14px 28px rgba(0,0,0,0.18);
-      background: #fff;
     }
 
     .letter-photo img {
       width: 100%;
-      display: block;
       aspect-ratio: 1 / 1.15;
       object-fit: cover;
-    }
-
-    .letter-content {
-      padding: 6px 6px 10px;
+      display: block;
     }
 
     .letter-badge {
       display: inline-block;
-      background: #ffd4e7;
-      color: #a43c6f;
+      background: #ffd8ea;
+      color: #9f3d6e;
       padding: 8px 14px;
       border-radius: 999px;
       font-weight: bold;
-      margin-bottom: 12px;
       font-size: 0.92rem;
+      margin-bottom: 12px;
     }
 
     .letter-title {
       margin: 0 0 12px;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      color: #7d2d56;
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      color: #7b2f59;
     }
 
     .letter-text {
       margin: 0;
       font-size: 1rem;
       line-height: 1.9;
-      color: #5b3250;
+      color: #5a324d;
       white-space: pre-line;
     }
 
@@ -385,20 +427,53 @@
         font-size: 0;
         transform: scale(0.2);
       }
-      20% {
+      25% {
         opacity: 1;
-        font-size: 28px;
-        transform: scale(0.8);
+        font-size: 36px;
+        transform: scale(0.9);
       }
-      55% {
+      60% {
         opacity: 1;
-        font-size: 130px;
+        font-size: 140px;
         transform: scale(1.15);
       }
       100% {
         opacity: 0;
-        font-size: 220px;
-        transform: scale(1.5);
+        font-size: 210px;
+        transform: scale(1.45);
+      }
+    }
+
+    @keyframes openFlap {
+      0% {
+        transform: rotateX(0deg);
+        z-index: 10;
+      }
+      100% {
+        transform: rotateX(180deg);
+        z-index: 1;
+      }
+    }
+
+    @keyframes pullLetter {
+      0% {
+        opacity: 0;
+        transform: translateY(110px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes modalFade {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
       }
     }
 
@@ -438,6 +513,27 @@
       .letter-grid {
         grid-template-columns: 1fr;
       }
+
+      .envelope {
+        min-height: 520px;
+      }
+
+      .envelope-back {
+        height: 430px;
+      }
+
+      .envelope-front {
+        height: 235px;
+      }
+
+      .envelope-flap {
+        height: 220px;
+      }
+
+      .close-btn {
+        top: 8px;
+        right: 8px;
+      }
     }
   </style>
 </head>
@@ -462,7 +558,7 @@
     </section>
 
     <section class="player-note">
-      Toca una foto para abrir su recuerdo como carta con texto y música 💖🎵
+      Toca una foto para abrir su sobre con carta y música 💖🎵
     </section>
 
     <div class="volume-box">
@@ -471,26 +567,51 @@
       <div class="volume-value" id="volumeValue">100%</div>
     </div>
 
-    <div id="status">Toca una foto para abrir la carta 🎶</div>
+    <div id="status">Toca una foto para abrir el sobre 🎶</div>
 
     <section class="collage">
-      <div class="photo p1" style="--rot:-2deg" data-index="1" data-text="Recuerdo 1 💫" data-audio="1.mp3" data-title="Nuestro Recuerdo 1 💫" data-message="Aquí puedes escribir el mensaje de la foto 1.\n\nPor ejemplo: este día me hizo muy feliz y me encanta recordarlo contigo.\n\nGracias por estar en mi vida."><img src="1.png" alt="Foto 1"></div>
-      <div class="photo p2" style="--rot:2deg" data-index="2" data-text="Recuerdo 2 ✨" data-audio="2.mp3" data-title="Nuestro Recuerdo 2 ✨" data-message="Aquí va el texto romántico de la foto 2.\n\nPuedes cambiar cada carta por algo especial para esa imagen."><img src="2.png" alt="Foto 2"></div>
-      <div class="photo p3" style="--rot:-1deg" data-index="3" data-text="Recuerdo 3 💙" data-audio="3.mp3" data-title="Nuestro Recuerdo 3 💙" data-message="Mensaje para la foto 3.\n\nRecuerdo bonito, palabras lindas, lo que tú quieras dedicar."><img src="3.png" alt="Foto 3"></div>
+      <div class="photo p1" style="--rot:-2deg" data-index="1" data-text="Recuerdo 1 💫" data-audio="1.mp3" data-title="Nuestro Recuerdo 1 💫" data-message="Aquí puedes escribir el mensaje de la foto 1.
+
+Por ejemplo: este día me hizo muy feliz y me encanta recordarlo contigo.
+
+Gracias por estar en mi vida."><img src="1.png" alt="Foto 1"></div>
+
+      <div class="photo p2" style="--rot:2deg" data-index="2" data-text="Recuerdo 2 ✨" data-audio="2.mp3" data-title="Nuestro Recuerdo 2 ✨" data-message="Aquí va el texto romántico de la foto 2.
+
+Puedes cambiar cada carta por algo especial para esa imagen."><img src="2.png" alt="Foto 2"></div>
+
+      <div class="photo p3" style="--rot:-1deg" data-index="3" data-text="Recuerdo 3 💙" data-audio="3.mp3" data-title="Nuestro Recuerdo 3 💙" data-message="Mensaje para la foto 3.
+
+Recuerdo bonito, palabras lindas, lo que tú quieras dedicar."><img src="3.png" alt="Foto 3"></div>
+
       <div class="photo p4" style="--rot:1deg" data-index="4" data-text="Recuerdo 4 🫶" data-audio="4.mp3" data-title="Nuestro Recuerdo 4 🫶" data-message="Mensaje para la foto 4."><img src="4.png" alt="Foto 4"></div>
+
       <div class="photo p5" style="--rot:-3deg" data-index="5" data-text="Recuerdo 5 🌙" data-audio="5.mp3" data-title="Nuestro Recuerdo 5 🌙" data-message="Mensaje para la foto 5."><img src="5.png" alt="Foto 5"></div>
+
       <div class="photo p6" style="--rot:2deg" data-index="6" data-text="Recuerdo 6 ❤️" data-audio="6.mp3" data-title="Nuestro Recuerdo 6 ❤️" data-message="Mensaje para la foto 6."><img src="6.png" alt="Foto 6"></div>
+
       <div class="photo p7" style="--rot:1deg" data-index="7" data-text="Recuerdo 7 💖" data-audio="7.mp3" data-title="Nuestro Recuerdo 7 💖" data-message="Mensaje para la foto 7."><img src="7.png" alt="Foto 7"></div>
+
       <div class="photo p8" style="--rot:-2deg" data-index="8" data-text="Recuerdo 8 💌" data-audio="8.mp3" data-title="Nuestro Recuerdo 8 💌" data-message="Mensaje para la foto 8."><img src="8.png" alt="Foto 8"></div>
+
       <div class="photo p2" style="--rot:2deg" data-index="9" data-text="Recuerdo 9 🌟" data-audio="9.mp3" data-title="Nuestro Recuerdo 9 🌟" data-message="Mensaje para la foto 9."><img src="9.png" alt="Foto 9"></div>
+
       <div class="photo p4" style="--rot:-1deg" data-index="10" data-text="Recuerdo 10 💞" data-audio="10.mp3" data-title="Nuestro Recuerdo 10 💞" data-message="Mensaje para la foto 10."><img src="10.png" alt="Foto 10"></div>
+
       <div class="photo p6" style="--rot:1deg" data-index="11" data-text="Recuerdo 11 🎀" data-audio="11.mp3" data-title="Nuestro Recuerdo 11 🎀" data-message="Mensaje para la foto 11."><img src="11.png" alt="Foto 11"></div>
+
       <div class="photo p3" style="--rot:-2deg" data-index="12" data-text="Recuerdo 12 💘" data-audio="12.mp3" data-title="Nuestro Recuerdo 12 💘" data-message="Mensaje para la foto 12."><img src="12.png" alt="Foto 12"></div>
+
       <div class="photo p5" style="--rot:2deg" data-index="13" data-text="Recuerdo 13 ✨" data-audio="13.mp3" data-title="Nuestro Recuerdo 13 ✨" data-message="Mensaje para la foto 13."><img src="13.png" alt="Foto 13"></div>
+
       <div class="photo p2" style="--rot:-1deg" data-index="14" data-text="Recuerdo 14 💝" data-audio="14.mp3" data-title="Nuestro Recuerdo 14 💝" data-message="Mensaje para la foto 14."><img src="14.png" alt="Foto 14"></div>
+
       <div class="photo p4" style="--rot:1deg" data-index="15" data-text="Recuerdo 15 🌹" data-audio="15.mp3" data-title="Nuestro Recuerdo 15 🌹" data-message="Mensaje para la foto 15."><img src="15.png" alt="Foto 15"></div>
+
       <div class="photo p6" style="--rot:-2deg" data-index="16" data-text="Recuerdo 16 💫" data-audio="16.mp3" data-title="Nuestro Recuerdo 16 💫" data-message="Mensaje para la foto 16."><img src="16.png" alt="Foto 16"></div>
+
       <div class="photo p3" style="--rot:2deg" data-index="17" data-text="Recuerdo 17 💗" data-audio="17.mp3" data-title="Nuestro Recuerdo 17 💗" data-message="Mensaje para la foto 17."><img src="17.png" alt="Foto 17"></div>
+
       <div class="photo p5" style="--rot:-1deg" data-index="18" data-text="Recuerdo 18 🥹" data-audio="18.mp3" data-title="Nuestro Recuerdo 18 🥹" data-message="Mensaje para la foto 18."><img src="18.png" alt="Foto 18"></div>
     </section>
 
@@ -501,17 +622,27 @@
   </main>
 
   <div class="modal" id="letterModal">
-    <div class="letter">
+    <div class="envelope-scene">
       <button class="close-btn" id="closeModal">✕</button>
-      <div class="letter-grid">
-        <div class="letter-photo">
-          <img id="modalImage" src="1.png" alt="Recuerdo">
+
+      <div class="envelope">
+        <div class="envelope-back"></div>
+        <div class="envelope-flap"></div>
+
+        <div class="letter-card">
+          <div class="letter-grid">
+            <div class="letter-photo">
+              <img id="modalImage" src="1.png" alt="Recuerdo">
+            </div>
+            <div class="letter-content">
+              <div class="letter-badge" id="modalBadge">Carta especial 💌</div>
+              <h2 class="letter-title" id="modalTitle">Título</h2>
+              <p class="letter-text" id="modalText">Texto</p>
+            </div>
+          </div>
         </div>
-        <div class="letter-content">
-          <div class="letter-badge" id="modalBadge">Carta especial 💌</div>
-          <h2 class="letter-title" id="modalTitle">Título</h2>
-          <p class="letter-text" id="modalText">Texto</p>
-        </div>
+
+        <div class="envelope-front"></div>
       </div>
     </div>
   </div>
@@ -558,15 +689,18 @@
     updateVolumeText(globalVolume);
 
     function openLetter(photo) {
-      const index = photo.dataset.index;
-      const title = photo.dataset.title || 'Carta especial';
+      const index = photo.dataset.index || '';
+      const title = photo.dataset.title || 'Carta especial 💌';
       const message = photo.dataset.message || 'Aquí va tu texto.';
-      const image = photo.querySelector('img').getAttribute('src');
+      const imageSrc = photo.querySelector('img').getAttribute('src');
 
-      modalImage.src = image;
+      modalImage.src = imageSrc;
       modalTitle.textContent = title;
       modalBadge.textContent = 'Recuerdo ' + index + ' 💌';
       modalText.textContent = message;
+
+      letterModal.classList.remove('show');
+      void letterModal.offsetWidth;
       letterModal.classList.add('show');
       document.body.style.overflow = 'hidden';
     }
@@ -577,12 +711,17 @@
     }
 
     closeModal.addEventListener('click', closeLetter);
+
     letterModal.addEventListener('click', (e) => {
-      if (e.target === letterModal) closeLetter();
+      if (e.target === letterModal) {
+        closeLetter();
+      }
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLetter();
+      if (e.key === 'Escape') {
+        closeLetter();
+      }
     });
 
     document.querySelectorAll('.photo').forEach((photo) => {
@@ -613,7 +752,7 @@
         setTimeout(() => {
           photo.classList.remove('opening');
           openLetter(photo);
-        }, 650);
+        }, 450);
       });
     });
   </script>
