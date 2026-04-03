@@ -95,16 +95,45 @@
       color: #f5f2ff;
     }
 
+    .player-note {
+      text-align: center;
+      margin: 18px auto 8px;
+      color: #f3ebff;
+      font-size: 0.98rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      max-width: 560px;
+      padding: 12px 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .volume-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px auto 28px;
+      max-width: 420px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 12px 16px;
+      backdrop-filter: blur(8px);
+      color: #fff;
+    }
+
+    .volume-box input[type="range"] {
+      width: 100%;
+      accent-color: #ff6ab7;
+      cursor: pointer;
+    }
+
     .collage {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 14px;
       grid-auto-rows: 110px;
-    }
-
-    .photo {
-      position: relative;
-      cursor: pointer;
     }
 
     .photo {
@@ -117,9 +146,6 @@
       transform: rotate(var(--rot));
       transition: transform .35s ease, box-shadow .35s ease;
       animation: fadeUp 1s ease;
-    }
-
-    .photo {
       cursor: pointer;
     }
 
@@ -149,6 +175,7 @@
       opacity: 0;
       pointer-events: none;
       z-index: 2;
+      text-shadow: 0 0 20px rgba(255,255,255,0.9), 0 0 35px rgba(255,0,128,0.8);
     }
 
     .photo.opening::before {
@@ -167,6 +194,7 @@
       backdrop-filter: blur(6px);
       font-size: 0.95rem;
       color: white;
+      z-index: 3;
     }
 
     .p1 { grid-column: span 4; grid-row: span 3; }
@@ -177,19 +205,6 @@
     .p6 { grid-column: span 4; grid-row: span 2; }
     .p7 { grid-column: span 5; grid-row: span 3; }
     .p8 { grid-column: span 3; grid-row: span 2; }
-
-    .player-note {
-      text-align: center;
-      margin: 18px auto 8px;
-      color: #f3ebff;
-      font-size: 0.98rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 18px;
-      max-width: 560px;
-      padding: 12px 16px;
-      backdrop-filter: blur(8px);
-    }
 
     .footer {
       text-align: center;
@@ -270,6 +285,15 @@
       </p>
     </section>
 
+    <section class="player-note">
+      Toca una foto para abrir su recuerdo con un corazón animado y su música 💖🎵
+    </section>
+
+    <div class="volume-box">
+      <span>🔊 Volumen</span>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+    </div>
+
     <section class="collage">
       <div class="photo p1" style="--rot:-2deg" data-text="Recuerdo 1 💫" data-audio="1.mp3">
         <img src="1.png" alt="Foto 1" />
@@ -337,6 +361,15 @@
     const hearts = document.getElementById('hearts');
     const symbols = ['💙','💖','✨','🤍','🌙','⭐'];
     let currentAudio = null;
+    let globalVolume = 1;
+    const volumeControl = document.getElementById('volumeControl');
+
+    volumeControl.addEventListener('input', () => {
+      globalVolume = parseFloat(volumeControl.value);
+      if (currentAudio) {
+        currentAudio.volume = globalVolume;
+      }
+    });
 
     for (let i = 0; i < 40; i++) {
       const heart = document.createElement('div');
@@ -364,7 +397,7 @@
         }
 
         currentAudio = new Audio(src);
-        currentAudio.volume = 1;
+        currentAudio.volume = globalVolume;
 
         try {
           await currentAudio.play();
